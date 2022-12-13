@@ -63,9 +63,10 @@ public:
         Node *temp = llHead;
         while (temp)
         {
-            cout << temp->data << endl;
+            cout << temp->data << " -> ";
             temp = temp->next;
         }
+        cout << "/0" << endl;
     }
 
     int Sum()
@@ -205,7 +206,7 @@ public:
     }
 };
 
-/* -----------------------------------------Recursive function-------------------------------------------- */
+/* -----------------------------------------External function-------------------------------------------- */
 void RecurseDisp(Node *head)
 {
     if (head)
@@ -368,18 +369,47 @@ void concatLL(LinkedList *l1, LinkedList *l2)
         temp = temp->next;
     }
     temp->next = l2->llHead;
-    // Node *d = l1->llHead;
-    // while (d)
-    // {
-    //     cout << d->data << endl;
-    //     d = d->next;
-    // }
+}
+
+Node *MergeLL(Node *h1, Node *h2)
+{
+    if (!h1)
+        return h2;
+    if (!h2)
+        return h1;
+
+    if (h1->data < h2->data)
+    {
+        h1->next = MergeLL(h1->next, h2);
+        return h1;
+    }
+    else
+    {
+        h2->next = MergeLL(h1, h2->next);
+        return h2;
+    }
+}
+
+bool isLoop(Node *h)
+{
+    Node *p, *q;
+    p = q = h;
+    do
+    {
+        p = p->next;
+        q = q->next;
+        q != NULL ? q->next : q;
+    } while (p && q && p != q);
+
+    return p == q ? true : false;
 }
 
 int main()
 {
     int arr[] = {1, 2, 3, 4, 5, 6};
+    int arr2[] = {1, 4, 5, 5, 7, 9, 10};
     int arr_siz = sizeof(arr) / sizeof(arr[0]);
+    int arr_siz2 = sizeof(arr2) / sizeof(arr2[0]);
     LinkedList ll;
     ll.Create_and_append(arr, arr_siz);
     // ll.Create_and_append(arr, arr_siz);
@@ -421,9 +451,12 @@ int main()
     cout << "List1" << endl;
     l1.Display();
     cout << "list2" << endl;
-    l2.Create_and_append(arr, arr_siz);
+    l2.Create_and_append(arr2, arr_siz2);
     l2.Display();
     cout << "after merging" << endl;
+    LinkedList l3;
+    l3.llHead = MergeLL(l1.llHead, l2.llHead);
+    l3.Display();
 
     return 0;
 }
