@@ -1,23 +1,47 @@
-#include <math.h>
 #include <iostream>
+#include <string>
 using namespace std;
+
+struct Node
+{
+    int data;
+    struct Node *next;
+    Node(int x)
+    {
+        data = x;
+        next = NULL;
+    }
+};
 
 class Solution
 {
 public:
-    bool isPowerOfTwo(int n)
+    // Function to check whether the list is palindrome.
+    bool isPalindrome(Node *head)
     {
-        if (n == 1)
-            return true;
-        if (n > 0 && n % 2 == 0)
-            return true;
-        return false;
+        // 1 2 3 2 1
+        int sum = 0;
+        int siz = 0;
+        Node *itr = head;
+        Node *itr2 = head;
+        while (itr->next)
+        {
+            sum += head->data;
+            siz++;
+        }
+        int mid = (siz / 2) + 1;
+        for (int i = 0; i <= mid; i++)
+        {
+            itr2 = itr2->next;
+        }
+        
     }
 };
 
-int main(int argc, char const *argv[])
+int main()
 {
-    cout << log2(3) << endl;
-    cout << pow(2, log2(3)) << endl;
+    string s = "hello world";
+    Solution o;
+    // cout << o.isPalindrome();
     return 0;
 }
