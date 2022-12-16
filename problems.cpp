@@ -1,47 +1,78 @@
 #include <iostream>
-#include <string>
 using namespace std;
 
-struct Node
+class Box
 {
-    int data;
-    struct Node *next;
-    Node(int x)
-    {
-        data = x;
-        next = NULL;
-    }
-};
+private:
+    int l, b, h;
 
-class Solution
-{
 public:
-    // Function to check whether the list is palindrome.
-    bool isPalindrome(Node *head)
+    Box()
     {
-        // 1 2 3 2 1
-        int sum = 0;
-        int siz = 0;
-        Node *itr = head;
-        Node *itr2 = head;
-        while (itr->next)
-        {
-            sum += head->data;
-            siz++;
-        }
-        int mid = (siz / 2) + 1;
-        for (int i = 0; i <= mid; i++)
-        {
-            itr2 = itr2->next;
-        }
-        
+        l = b = h = 0;
     }
+
+    Box(int length, int breadth, int height)
+    {
+        l = length;
+        b = breadth;
+        h = height;
+    }
+
+    Box(Box &B)
+    {
+        l = B.l;
+        b = B.b;
+        h = B.h;
+    }
+
+    int getLength()
+    {
+        return l;
+    }
+    int getBreadth()
+    {
+        return b;
+    }
+    int getHeight()
+    {
+        return h;
+    }
+
+    long long CalculateVolume()
+    {
+        return (long long)(l)*b * h;
+    }
+
+    bool operator<(Box &B)
+    {
+        // bool res = false;
+        if (l == B.l && b == B.b && h < B.h)
+            return true;
+
+        else if (l == B.l && b < B.b)
+            return true;
+
+        else if (l < B.l)
+            return true;
+
+        return false;
+    }
+
+    friend ostream &operator<<(ostream &os, Box &A);
 };
+ostream &operator<<(ostream &os, Box &A)
+{
+    cout << A.l << " " << A.b << " " << A.h;
+    return os;
+}
 
 int main()
 {
-    string s = "hello world";
-    Solution o;
-    // cout << o.isPalindrome();
+    Box a = {1, 2, 7};
+    Box b = {1, 2, 6};
+    bool va = (a < b);
+    // cout << a;
+    cout << va;
     return 0;
 }
