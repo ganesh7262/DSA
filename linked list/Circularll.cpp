@@ -86,6 +86,32 @@ public:
             }
         }
     }
+
+    void Delete(int index)
+    {
+        if (index == 1)
+        {
+            Node *trav = head;
+            do
+            {
+                trav = trav->next;
+            } while (trav->next != head);
+            trav->next = head->next;
+            delete head;
+            head = trav->next;
+            return;
+        }
+        Node *p, *q;
+        p = head->next;
+        q = head;
+        for (int i = 0; i < index - 2; i++)
+        {
+            p = p->next;
+            q = q->next;
+        }
+        q->next = p->next;
+        delete p;
+    }
 };
 
 void RecDisp(Node *head, Node *b)
@@ -116,7 +142,8 @@ int main()
     CLinkedList cl;
     cl.CreateAndAppend(arr, arr_siz);
     cl.Display();
-    cl.Insert(69, 0);
+    cout << endl;
+    cl.Delete(1);
     cl.Display();
     return 0;
 }
