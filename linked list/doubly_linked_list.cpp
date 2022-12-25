@@ -105,6 +105,77 @@ public:
             listSiz++;
         }
     }
+
+    void Delete(int idx)
+    {
+        if (idx == 1)
+        {
+            Node *temp = first;
+            first = first->next;
+            first->prev = nullptr;
+            delete temp;
+            listSiz--;
+        }
+        else
+        {
+            Node *idxNode = first;
+            for (int i = 0; idxNode && i < idx - 1; i++)
+            {
+                idxNode = idxNode->next;
+            }
+            if (idxNode->next)
+            {
+                idxNode->prev->next = idxNode->next;
+                idxNode->next->prev = idxNode->prev;
+                delete idxNode;
+                listSiz--;
+            }
+            else
+            {
+                idxNode->prev->next = nullptr;
+                last = idxNode->prev;
+                delete idxNode;
+                listSiz--;
+            }
+        }
+    }
+
+    void ReverseData()
+    {
+        /*
+        we only reverse the data and not the nodes
+         */
+        Node *h, *l;
+        h = first;
+        l = last;
+        int c = listSiz / 2;
+        int temp;
+        while (c--)
+        {
+            temp = h->data;
+            h->data = l->data;
+            l->data = temp;
+            h = h->next;
+            l = l->prev;
+        }
+    }
+
+    void ReverseNode()
+    {
+        Node *p = first;
+        Node *temp;
+        while (p)
+        {
+            temp = p->next;
+            p->next = p->prev;
+            p->prev = temp;
+            p = p->prev;
+            if (p != NULL && p->next == nullptr)
+            {
+                first = p;
+            }
+        }
+    }
 };
 
 int main()
@@ -113,9 +184,10 @@ int main()
     int arr_siz = sizeof(arr) / sizeof(arr[0]);
     DlinkedList dll = {arr, arr_siz};
     dll.Display();
-    dll.Insert(69, 5);
+    cout << endl;
+    dll.Delete(2);
     dll.Display();
-    dll.RevDisplay();
-
+    dll.ReverseNode();
+    dll.Display();
     return 0;
 }
