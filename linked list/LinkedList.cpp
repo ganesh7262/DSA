@@ -1,3 +1,4 @@
+#include <stack>
 #include <iostream>
 using namespace std;
 
@@ -404,14 +405,25 @@ bool isLoop(Node *h)
     return p == q ? true : false;
 }
 
+int MiddleNode(Node *head);
+int IntersectionNode(Node *n1, Node *n2);
+
 int main()
 {
-    int arr[] = {1, 2, 3, 4, 5, 6};
-    int arr2[] = {1, 4, 5, 5, 7, 9, 10};
+    int arr[] = {1, 2, 3, 4, 5, 6, 7, 8};
+    int arr2[] = {1, 4};
     int arr_siz = sizeof(arr) / sizeof(arr[0]);
     int arr_siz2 = sizeof(arr2) / sizeof(arr2[0]);
-    LinkedList ll;
-    ll.Create_and_append(arr, arr_siz);
+    LinkedList ll1;
+    LinkedList ll2;
+    ll1.Create_and_append(arr, arr_siz);
+    ll2.Create_and_append(arr2, arr_siz2);
+    Node *temp = ll1.llHead;
+    while (temp->data != 4)
+    {
+        temp = temp->next;
+    }
+    ll2.llTail->next = temp;
     // ll.Create_and_append(arr, arr_siz);
     // ll.Display();
     // int arr2[] = {6, 7, 8, 9, 10};
@@ -446,17 +458,58 @@ int main()
     // }
     // ll.Display();
     /* Merging two linked list */
-    LinkedList l1, l2;
-    l1.Create_and_append(arr, arr_siz);
-    cout << "List1" << endl;
-    l1.Display();
-    cout << "list2" << endl;
-    l2.Create_and_append(arr2, arr_siz2);
-    l2.Display();
-    cout << "after merging" << endl;
-    LinkedList l3;
-    l3.llHead = MergeLL(l1.llHead, l2.llHead);
-    l3.Display();
+    // LinkedList l1, l2;
+    // l1.Create_and_append(arr, arr_siz);
+    // cout << "List1" << endl;
+    // l1.Display();
+    // cout << "list2" << endl;
+    // l2.Create_and_append(arr2, arr_siz2);
+    // l2.Display();
+    // cout << "after merging" << endl;
+    // LinkedList l3;
+    // l3.llHead = MergeLL(l1.llHead, l2.llHead);
+    // l3.Display();
+    // cout << MiddleNode(ll1.llHead) << endl;
+    cout << IntersectionNode(ll1.llHead, ll2.llHead) << endl;
 
     return 0;
+}
+
+/*      student challenges */
+
+int MiddleNode(Node *head)
+{
+    /* if one pointer moves two node at a time then the other node which moves one node at a time will be at the mid of linkedlist
+        when first node reaches the end of linkedlist
+        in case of even number of nodes second pointer will be at the second middle element of linked list */
+    Node *fast, *slow;
+    fast = slow = head;
+    while (fast && fast->next)
+    {
+        fast = fast->next->next;
+        slow = slow->next;
+    }
+    return slow->data;
+}
+
+int IntersectionNode(Node *n1, Node *n2)
+{
+    Node *res;
+    stack<Node *> t1;
+    stack<Node *> t2;
+    while (n1)
+        t1.push(n1);
+    while (n2)
+        t2.push(n2);
+    while (true)
+    {
+        if (t1.top() == t2.top())
+        {
+            res = t1.top();
+            t1.pop();
+            t2.pop();
+        }
+        else
+            return res->data;
+    }
 }
