@@ -1,28 +1,25 @@
 #include <string>
-#include <vector>
 #include <iostream>
-#include <stack>
 using namespace std;
 
-int main(int argc, char const *argv[])
+int main()
 {
-    string s = "ganesh";
-    stack<char> stack;
-    for (int i = 0; i < s.size(); i++)
+    int tc;
+    cin >> tc;
+    while (tc--)
     {
-        stack.push(s[i]);
+        string res;
+        long long int N, K, D;
+        cin >> N >> K;
+        while (N--)
+        {
+            cin >> D;
+            if (D % K == 0)
+                res = res + '1';
+            else
+                res = res + '0';
+        }
+        cout << res << endl;
     }
-
-    char *res = new char[sizeof(s) / sizeof(s[0])];
-    for (int i = 0; i < s.size(); i++)
-    {
-        res[i] = stack.top();
-        stack.pop();
-    }
-    for (size_t i = 0; i < s.size(); i++)
-    {
-        cout << res[i] << endl;
-    }
-
     return 0;
 }
