@@ -22,7 +22,7 @@ public:
         top = -1; // -1 means the stack is empty and stack full condition is size-1
     }
 
-    bool empty()
+    bool isEmpty()
     {
         return top == -1;
     }
@@ -45,7 +45,7 @@ public:
     }
     int pop()
     {
-        if (empty())
+        if (isEmpty())
         {
             cout << "Stack Underflow" << endl;
             return -1;
