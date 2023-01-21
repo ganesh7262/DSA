@@ -1,8 +1,9 @@
+#include <string.h>
 #include <iostream>
 #include <stack>
 using namespace std;
 
-bool IsOperand(char x)
+bool IsOperator(char x)
 {
     if (x == '+' || x == '-' || x == '/' || x == '*')
         return true;
@@ -34,7 +35,7 @@ char *ExpConvert(char *exp, int siz)
 
     for (int i = 0; i < siz; i++)
     {
-        if (IsOperand(exp[i]))
+        if (IsOperator(exp[i]))
         {
             while (!stk.empty() && (Precidence(stk.top()) >= Precidence(exp[i])))
             {
@@ -59,7 +60,7 @@ char *ExpConvert(char *exp, int siz)
 int main()
 {
     char *exp = "a+b*c-d/e";
-    int siz = 10;
+    int siz = strlen(exp) + 1;
     char *res = ExpConvert(exp, siz);
     Display(res, siz);
     return 0;
